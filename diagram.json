@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "author": "Guardian Eye - LD7182 AIoT",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-s3-devkitc-1",
+      "id": "esp",
+      "top": 80,
+      "left": 0,
+      "attrs": { "flashSize": "8" }
+    },
+    {
+      "type": "wokwi-mpu6050",
+      "id": "imu1",
+      "top": 0,
+      "left": 300,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledR",
+      "top": 0,
+      "left": -160,
+      "attrs": { "color": "red", "label": "CRITICAL" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledG",
+      "top": 0,
+      "left": -110,
+      "attrs": { "color": "green", "label": "HEALTHY" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledY",
+      "top": 0,
+      "left": -60,
+      "attrs": { "color": "yellow", "label": "WARNING" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rR",
+      "top": 50,
+      "left": -160,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rG",
+      "top": 50,
+      "left": -110,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rY",
+      "top": 50,
+      "left": -60,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 220,
+      "left": -160,
+      "attrs": { "color": "red", "label": "FAULT SIM" }
+    }
+  ],
+  "connections": [
+    ["esp:TX", "$serialMonitor:RX", "", []],
+    ["esp:RX", "$serialMonitor:TX", "", []],
+
+    ["imu1:VCC", "esp:3V3",   "red",   ["h10"]],
+    ["imu1:GND", "esp:GND.2", "black", ["h10"]],
+    ["imu1:SCL", "esp:9",     "blue",  ["h10"]],
+    ["imu1:SDA", "esp:8",     "green", ["h10"]],
+
+    ["esp:4",   "rR:1", "red",    ["h0"]],
+    ["rR:2",    "ledR:A", "red",  ["v0"]],
+    ["ledR:C",  "esp:GND.1", "black", ["h0"]],
+
+    ["esp:5",   "rG:1", "green",  ["h0"]],
+    ["rG:2",    "ledG:A", "green",["v0"]],
+    ["ledG:C",  "esp:GND.1", "black", ["h0"]],
+
+    ["esp:6",   "rY:1", "orange", ["h0"]],
+    ["rY:2",    "ledY:A","orange",["v0"]],
+    ["ledY:C",  "esp:GND.1", "black", ["h0"]],
+
+    ["btn1:1.l","esp:7",  "purple",["h0"]],
+    ["btn1:1.r","esp:3V3","red",   ["h0"]],
+    ["btn1:2.r","esp:GND.1","black",["h0"]]
+  ]
+}
